@@ -65,7 +65,7 @@ $(document).ready(function(){
         var first_name = localStorage.getItem("first_name");
         var last_name = localStorage.getItem("last_name");
         $.ajax({
-            url: "http://api.icndb.com/jokes/random?firstName="+first_name+"&lastName="+last_name,
+            url: "https://api.icndb.com/jokes/random?firstName="+first_name+"&lastName="+last_name,
             type: "GET",
             beforeSend: function(){
                 $("#loading_fetching").html('Fetching joke, Please wait...<br/><img src="../images/loading.gif" width="50px" height="50px"/>');
