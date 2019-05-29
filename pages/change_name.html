@@ -1,0 +1,114 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../css/top_bar.css">
+        <link rel="stylesheet" type="text/css" href="../css/change_name.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="top_bar">
+            <span id="user_span">Hello, <span id="username_value"></span></span>
+            <button id="remove_name_btn">Remove Name</button>
+            <button id="change_name_btn">Change Name</button>
+            <button id="go_to_questions_btn">Go To Questions</button>
+            <button id="our_team_btn">Our Team</button>
+        </div>
+        <div id="change_div">
+            <span id="change_title">Change Name</span>
+            <br/><br/>
+            <div class="settings">
+                <div class="left">
+                    <span id="settings_subtitle">Profile<span>
+                </div>
+                <div class="right">
+                    <span>First Name</span>
+                    <input id="fname_input" type="text" placeholder="First Name">
+                    <span>Last Name</span>
+                    <input id="lname_input" type="text" placeholder="Last Name">
+                    <span class="warning_msg" id="profile_warning_msg"></span>
+                </div>
+            </div>
+        </div>
+        <button id="go_to_questions">Go To Questions</button>
+    </body>
+</html>
+<script>
+$(document).ready(function(){
+
+    var username = "";
+
+    if(localStorage.getItem("first_name") !== null || localStorage.getItem("last_name") !== null)
+    {
+        username = localStorage.getItem("first_name") + " " +localStorage.getItem("last_name");
+    }
+    else
+    {
+        window.location.href="../index.html";
+    }
+
+    $("#username_value").text(username);
+    
+    $("#remove_name_btn").click(function(){
+        localStorage.removeItem("first_name");
+        localStorage.removeItem("last_name");
+        window.location.href="../index.html";
+    });
+    
+    $("#change_name_btn").click(function(){
+        window.location.href="./change_name.html";
+    });
+
+    $("#our_team_btn").click(function(){
+        window.location.href="./our_team.html";
+    });
+    
+    $("#go_to_questions_btn").click(function(){
+        window.location.href="./questions.html";
+    });
+
+    $("#fname_input").val(localStorage.getItem("first_name"));
+    $("#lname_input").val(localStorage.getItem("last_name"));
+
+    $("#fname_input").change(function(){
+        $('#profile_warning_msg').html('<label id="save">Saving  </label><img src="../images/loading.gif">');
+        if($(this).val() == "")
+        {
+            $("#profile_warning_msg").text("Please enter your first name");
+            $(this).css("border-color","red");
+        }
+        else
+        {
+            var firstname = $(this).val();
+            var lastname = $("#lname_input").val();
+            localStorage.setItem("first_name", firstname);
+            username = firstname + " " + lastname;
+            $("#username_value").text(username);
+            $(this).css("border-color","green");
+            $('#profile_warning_msg').html('<label id="save">Saved  </label><img src="../images/correct.png">');
+        }
+    });
+
+    $("#lname_input").change(function(){
+        $('#profile_warning_msg').html('<label id="save">Saving  </label><img src="../images/loading.gif">');
+        if($(this).val() == "")
+        {
+            $("#profile_warning_msg").text("Please enter your last name");
+            $(this).css("border-color","red");
+        }
+        else
+        {
+            var firstname = $("#fname_input").val();
+            var lastname = $(this).val();
+            localStorage.setItem("last_name", lastname);
+            username = firstname + " " + lastname;
+            $("#username_value").text(username);
+            $(this).css("border-color","green");
+            $('#profile_warning_msg').html('<label id="save">Saved  </label><img src="../images/correct.png">');
+        }
+    });
+
+    $("#go_to_questions").click(function(){
+        window.location.href="./questions.html";
+    });
+
+});
+</script>

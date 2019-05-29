@@ -1,0 +1,194 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../css/top_bar.css">
+        <link rel="stylesheet" type="text/css" href="../css/questions_page.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="top_bar">
+            <span id="user_span">Hello, <span id="username_value"></span></span>
+            <button id="remove_name_btn">Remove Name</button>
+            <button id="change_name_btn">Change Name</button>
+            <button id="go_to_questions_btn">Go To Questions</button>
+            <button id="our_team_btn">Our Team</button>
+        </div>
+        <div id="exam_div">
+            <span id="exam_title">Random questions</span>
+            <br/><br/>
+            <div id="loading_fetching"></div>
+        </div>
+        <div id="failed_message">
+            <span id="failed_msg_content">Incorrect answers. You can retry with the same questions OR fetching new questions.</span>
+            <button id="same_questions_btn">Same questions</button>
+            <button id="fetch_new_questions">Fetch new questions</button>
+        </div>
+        <button id="check_exam_btn">Check Exam</button>
+    </body>
+</html>
+<script>
+$(document).ready(function(){
+
+    localStorage.setItem("hasPermission", 0);
+
+    var username = "";
+    var question_number = 1;
+    var questions_answers = new Object();
+    var collected_answers = new Object();
+
+    if(localStorage.getItem("first_name") !== null || localStorage.getItem("last_name") !== null)
+    {
+        username = localStorage.getItem("first_name") + " " +localStorage.getItem("last_name");
+    }
+    else
+    {
+        window.location.href="../index.html";
+    }
+
+    $("#username_value").text(username);
+    
+    $("#remove_name_btn").click(function(){
+        localStorage.removeItem("first_name");
+        localStorage.removeItem("last_name");
+        window.location.href="../index.html";
+    });
+    
+    $("#change_name_btn").click(function(){
+        window.location.href="./change_name.html";
+    });
+
+    $("#our_team_btn").click(function(){
+        window.location.href="./our_team.html";
+    });
+
+    $("#go_to_questions_btn").click(function(){
+        window.location.href="./questions.html";
+    });
+
+    var fetch_questions = function(){
+        $.ajax({
+            url: "https://opentdb.com/api.php?amount=3",
+            type: "GET",
+            beforeSend: function(){
+                $("#loading_fetching").html('Fetching questions, Please wait...<br/><img src="../images/loading.gif" width="50px" height="50px"/>');
+            },
+            success: function(data){
+                $("#loading_fetching").html('');
+                var results = data.results;
+                for(let i=0; i<results.length; i++)
+                {
+                    let question_content = results[i].question;
+                    let answers = [];
+                    answers.push(results[i].correct_answer);
+                    questions_answers[question_number] = results[i].correct_answer;
+                    let incorrect_answers = results[i].incorrect_answers;
+                    $.each(incorrect_answers, function(i, val){
+                        answers.push(val);
+                    });
+                    shuffle(answers);
+                    addQuestion(question_content, answers);
+                }
+                $("#check_exam_btn").css("display", "table");
+            }
+        });
+    };
+
+    fetch_questions();
+
+    function shuffle(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--)
+        {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+        return a;
+    }
+
+    function addQuestion(question_content, answers)
+    {
+        $("#exam_div").append(
+            '<div class="question" id="'+ question_number +'">'+
+                '<span class="question_content">'+
+                    question_number + ") " + question_content+
+                '</span>'+
+                '<br>'+
+                '<div class="answers">'+
+                '</div>'+
+            '</div>');
+            addAnswers(question_number, answers);
+            question_number++;
+    }
+
+    function addAnswers(question_id, answers)
+    {
+        var temp = $(this);
+        $(".question").each(function(){
+            if($(this).attr("id") == question_id)
+                temp = $(this);
+        });
+
+        var answers_div = temp.children(".answers");
+
+        $.each(answers, function(i, val){
+            $(answers_div).append(
+                '<input type="radio" name="question'+ question_id +'">'+
+                '<span id="radio_answer">'+ val +'</span>'+
+                '<br>');
+        });
+    }
+
+    $("#check_exam_btn").click(function(){
+        $(".question").each(function(){
+            let id = $(this).attr("id");
+            let answers = $(this).children(".answers").children("input");
+            answers.each(function(){
+                if(($(this).prop("checked")))
+                {
+                    collected_answers[id] = $(this).next("span").text();
+                }
+            });
+        });
+        check_result();
+    });
+
+    function check_result()
+    {
+        let result = 0;
+        $.each(questions_answers, function(K, V){
+            if(collected_answers[K] != V)
+                result = -1;
+        });
+        if(result == 0) //success
+        {
+            window.location.href="./joke.html";
+            localStorage.setItem("hasPermission", 1);
+        }
+        else //failed
+        {
+            $("#check_exam_btn").hide();
+            $("#failed_message").slideDown();
+            $("#exam_div").slideUp();
+        }
+    }
+
+    $("#same_questions_btn").click(function(){
+        $("#failed_message").slideUp();
+        $("#exam_div").slideDown();
+        $("#check_exam_btn").show();
+    });
+
+    $("#fetch_new_questions").click(function(){
+        $("#exam_div").html(
+            '<span id="exam_title">Random questions</span>'+
+            '<br/><br/>'+
+            '<div id="loading_fetching"></div>');
+        question_number = 1;
+        fetch_questions();
+        $("#failed_message").slideUp();
+        $("#exam_div").slideDown();
+    });
+
+});
+</script>
