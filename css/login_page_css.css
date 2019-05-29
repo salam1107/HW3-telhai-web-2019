@@ -1,0 +1,102 @@
+body
+{
+    background-color: black;
+    font-family: "proximanova", sans-serif;
+}
+
+#login_content
+{
+    position: relative;
+    top: 150px;
+    width: 40%;
+    height: fit-content;
+    background-color: white;
+    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: 0px 0px 8px 2px white;
+    padding: 20px;
+}
+
+#login_title
+{
+    font-size: 20px;
+    font-weight: bold;
+    display: table;
+    margin: 0 auto;
+}
+
+.left_login
+{
+    display: inline-flex;
+    padding: 6px;
+    margin-left: 25%;
+}
+
+.right_login
+{
+    float: right;
+    border: 1px solid #ccc;
+    padding: 0 5px;
+    width: 175px;
+    height: 30px;
+    outline: none;
+    margin-right: 25%;
+}
+
+#continue_btn
+{
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 10px 70px 10px 70px;
+    color: #fff;
+    background-color: #0098d3;
+    display: table;
+    margin: 0 auto;
+    transition: background-color .3s ease;
+}
+
+#continue_btn:hover
+{
+    background-color: #57c6f3;
+}
+
+#note_msg
+{
+    color: #0098d3;
+    font-size: 14px;
+    text-align: center;
+}
+
+.slides
+{
+    position: fixed;
+    display: none;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+}
+
+.fade
+{
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade
+{
+  from {opacity: .4} 
+  to {opacity: 0.5}
+}
+
+@keyframes fade
+{
+  from {opacity: .4} 
+  to {opacity: 0.5}
+}
