@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./css/login_page_css.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="images_slideshow">
+            <img class="slides fade" src="images/slide1.png" style="display: none;">
+            <img class="slides fade" src="images/slide2.png" style="display: none;">
+            <img class="slides fade" src="images/slide3.png" style="display: block;">
+            <img class="slides fade" src="images/slide4.png" style="display: none;">
+        </div>
+        <div id="login_content">
+            <span id="login_title">Please insert your name to continue</span><br/>
+            <div id="note_msg"></div><br/>
+            <form>
+                <label class="left_login">First Name</label> <input id="fname" class="right_login" type="text" placeholder="Enter your first name"><br><br>
+                <label class="left_login">Last Name</label> <input id="lname" class="right_login" type="text" placeholder="Enter your last name"><br><br><br> 
+                <button id="continue_btn">Continue</button>
+            </form>
+        </div>
+    </body>
+</html>
+<script>
+
+$(document).ready(function(){
+
+    if (typeof(Storage) !== "undefined")
+    {
+        if(localStorage.getItem("first_name") !== null || localStorage.getItem("last_name") !== null)
+        {
+            window.location.href="./pages/questions.html";
+        }
+    } 
+    else 
+    {
+        $("#note_msg").html("Sorry, your browser does not support Web Storage...");
+    }
+
+    $("form").submit(function(e){
+        e.preventDefault();
+    });
+
+    $("#continue_btn").click(function(){
+        $("#note_msg").html('Saving data...<img src="images/loading.gif" width="20px" height="20px"/>');
+        if (typeof(Storage) !== "undefined")
+        {
+            var first_name = $("#fname").val();
+            var last_name = $("#lname").val();
+            localStorage.setItem("first_name", first_name);
+            localStorage.setItem("last_name", last_name);
+            window.location.href="./pages/questions.html";
+        } 
+        else 
+        {
+            $("#note_msg").html("Sorry, your browser does not support Web Storage...");
+        }
+    });
+
+});
+
+var slideIndex = 0;
+carousel();
+
+function carousel()
+{
+    var i;
+    var x = document.getElementsByClassName("slides");
+    for (i = 0; i < x.length; i++)
+    {
+        x[i].style.display = "none";  
+    }
+    slideIndex++;
+    if (slideIndex > x.length)
+    {
+        slideIndex = 1;
+    }
+    x[slideIndex-1].style.display = "block";  
+    setTimeout(carousel, 3000);
+}
+
+</script>
