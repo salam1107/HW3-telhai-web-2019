@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../css/top_bar.css">
+        <link rel="stylesheet" type="text/css" href="../css/joke_page.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="top_bar">
+            <span id="user_span">Hello, <span id="username_value"></span></span>
+            <button id="remove_name_btn">Remove Name</button>
+            <button id="change_name_btn">Change Name</button>
+            <button id="go_to_questions_btn">Go To Questions</button>
+            <button id="our_team_btn">Our Team</button>
+        </div>
+        <div id="joke_div">
+            <span id="joke_title">Random Joke</span>
+            <br/><br/>
+            <div id="loading_fetching"></div>
+            <div id="joke"></div>
+            <img id="smile_image" src="../images/smile.png" />
+        </div>
+        <button id="another_joke_btn">Another Joke</button>
+    </body>
+</html>
+<script>
+$(document).ready(function(){
+
+    var username = "";
+
+    if(localStorage.getItem("hasPermission") == 0)
+    {
+        window.location.href="./questions.html";
+    }
+
+    if(localStorage.getItem("first_name") !== null || localStorage.getItem("last_name") !== null)
+    {
+        username = localStorage.getItem("first_name") + " " +localStorage.getItem("last_name");
+    }
+    else
+    {
+        window.location.href="../index.html";
+    }
+
+    $("#username_value").text(username);
+    
+    $("#remove_name_btn").click(function(){
+        localStorage.removeItem("first_name");
+        localStorage.removeItem("last_name");
+        window.location.href="../index.html";
+    });
+    
+    $("#change_name_btn").click(function(){
+        window.location.href="./change_name.html";
+    });
+
+    $("#our_team_btn").click(function(){
+        window.location.href="./our_team.html";
+    });
+
+    $("#go_to_questions_btn").click(function(){
+        window.location.href="./questions.html";
+    });
+
+    var fetch_joke = function(){
+        var first_name = localStorage.getItem("first_name");
+        var last_name = localStorage.getItem("last_name");
+        $.ajax({
+            url: "http://api.icndb.com/jokes/random?firstName="+first_name+"&lastName="+last_name,
+            type: "GET",
+            beforeSend: function(){
+                $("#loading_fetching").html('Fetching joke, Please wait...<br/><img src="../images/loading.gif" width="50px" height="50px"/>');
+                $("#smile_image").hide();
+                $("#joke").hide();
+            },
+            success: function(data){
+                $("#loading_fetching").html('');
+                $("#joke").html(data.value.joke);
+                $("#smile_image").show();
+                $("#joke").show();
+            }
+        });
+    };
+
+    fetch_joke();
+
+    $("#another_joke_btn").click(function(){
+        fetch_joke();
+    });
+
+});
+</script>
