@@ -42,7 +42,11 @@ $(document).ready(function(){
     });
 
     $("#continue_btn").click(function(){
-        $("#note_msg").html('Saving data...<img src="images/loading.gif" width="20px" height="20px"/>');
+        if($("#fname").val() == "" || $("#lname").val() == "")
+        {
+            $("#note_msg").html("Please fill out all fields.");
+            return;
+        }
         if (typeof(Storage) !== "undefined")
         {
             var first_name = $("#fname").val();
