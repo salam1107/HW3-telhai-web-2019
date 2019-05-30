@@ -27,14 +27,11 @@
 </html>
 <script>
 $(document).ready(function(){
-
     localStorage.setItem("hasPermission", 0);
-
     var username = "";
     var question_number = 1;
     var questions_answers = new Object();
     var collected_answers = new Object();
-
     if(localStorage.getItem("first_name") !== null || localStorage.getItem("last_name") !== null)
     {
         username = localStorage.getItem("first_name") + " " +localStorage.getItem("last_name");
@@ -43,27 +40,21 @@ $(document).ready(function(){
     {
         window.location.href="../index.html";
     }
-
     $("#username_value").text(username);
-    
-    $("#remove_name_btn").click(function(){
+        $("#remove_name_btn").click(function(){
         localStorage.removeItem("first_name");
         localStorage.removeItem("last_name");
         window.location.href="../index.html";
     });
-    
-    $("#change_name_btn").click(function(){
+        $("#change_name_btn").click(function(){
         window.location.href="./change_name.html";
     });
-
     $("#our_team_btn").click(function(){
         window.location.href="./our_team.html";
     });
-
     $("#go_to_questions_btn").click(function(){
         window.location.href="./questions.html";
     });
-
     var fetch_questions = function(){
         $.ajax({
             url: "https://opentdb.com/api.php?amount=3",
@@ -91,9 +82,7 @@ $(document).ready(function(){
             }
         });
     };
-
     fetch_questions();
-
     function shuffle(a) {
         var j, x, i;
         for (i = a.length - 1; i > 0; i--)
@@ -105,7 +94,6 @@ $(document).ready(function(){
         }
         return a;
     }
-
     function addQuestion(question_content, answers)
     {
         $("#exam_div").append(
@@ -120,7 +108,6 @@ $(document).ready(function(){
             addAnswers(question_number, answers);
             question_number++;
     }
-
     function addAnswers(question_id, answers)
     {
         var temp = $(this);
@@ -128,9 +115,7 @@ $(document).ready(function(){
             if($(this).attr("id") == question_id)
                 temp = $(this);
         });
-
         var answers_div = temp.children(".answers");
-
         $.each(answers, function(i, val){
             $(answers_div).append(
                 '<input type="radio" name="question'+ question_id +'">'+
@@ -138,7 +123,6 @@ $(document).ready(function(){
                 '<br>');
         });
     }
-
     $("#check_exam_btn").click(function(){
         $(".question").each(function(){
             let id = $(this).attr("id");
@@ -152,7 +136,6 @@ $(document).ready(function(){
         });
         check_result();
     });
-
     function check_result()
     {
         let result = 0;
@@ -172,13 +155,11 @@ $(document).ready(function(){
             $("#exam_div").slideUp();
         }
     }
-
     $("#same_questions_btn").click(function(){
         $("#failed_message").slideUp();
         $("#exam_div").slideDown();
         $("#check_exam_btn").show();
     });
-
     $("#fetch_new_questions").click(function(){
         $("#exam_div").html(
             '<span id="exam_title">Random questions</span>'+
@@ -189,6 +170,5 @@ $(document).ready(function(){
         $("#failed_message").slideUp();
         $("#exam_div").slideDown();
     });
-
 });
 </script>
