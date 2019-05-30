@@ -9,7 +9,6 @@
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 3px 8px;
 }
-
 #exam_title
 {
     font-size: 24px;
@@ -17,29 +16,24 @@
     display: table;
     margin: 0 auto;
 }
-
 #loading_fetching
 {
     text-align: center;
     color: #0098d3;
 }
-
 .question
 {
     margin-bottom: 25px;
     padding-left: 20px;
 }
-
 .question_content
 {
     font-weight: bold;
 }
-
 .answers
 {
     margin: 15px;
 }
-
 #failed_message
 {
     margin: 0 auto;
@@ -53,14 +47,12 @@
     display: none;
     text-align: center;
 }
-
 #failed_msg_content
 {
     display: block;
     color: red;
     margin-bottom: 20px;
 }
-
 #failed_message button
 {
     border: none;
@@ -74,12 +66,10 @@
     margin: 0 auto;
     transition: background-color .3s ease;
 }
-
 #failed_message button:hover
 {
     background-color: #2fb7ec;
 }
-
 #check_exam_btn
 {
     border: none;
@@ -94,7 +84,6 @@
     margin: 0 auto;
     transition: background-color .3s ease;
 }
-
 #check_exam_btn:hover
 {
     background-color: #2fb7ec;
