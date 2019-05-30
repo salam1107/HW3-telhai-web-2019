@@ -3,7 +3,6 @@ body
     background-color: rgb(248, 250, 251);
     font-family: "proximanova", sans-serif;
 }
-
 #top_bar
 {
     position: fixed;
@@ -14,7 +13,6 @@ body
     height: 52px;
     z-index: 100;
 }
-
 #top_bar button
 {
     position: relative;
@@ -31,12 +29,10 @@ body
     cursor: pointer;
     transition: background-color .3s ease;
 }
-
 #top_bar button:hover
 {
     background-color: #0098d3;
 }
-
 #user_span
 {
     position: relative;
@@ -47,7 +43,6 @@ body
     color: white;
     padding: 17px;
 }
-
 #username_value
 {
     font-weight: bold;
