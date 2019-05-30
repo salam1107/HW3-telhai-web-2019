@@ -3,7 +3,6 @@ body
     background-color: black;
     font-family: "proximanova", sans-serif;
 }
-
 #login_content
 {
     position: relative;
@@ -16,7 +15,6 @@ body
     box-shadow: 0px 0px 8px 2px white;
     padding: 20px;
 }
-
 #login_title
 {
     font-size: 20px;
@@ -24,14 +22,12 @@ body
     display: table;
     margin: 0 auto;
 }
-
 .left_login
 {
     display: inline-flex;
     padding: 6px;
     margin-left: 25%;
 }
-
 .right_login
 {
     float: right;
@@ -42,7 +38,6 @@ body
     outline: none;
     margin-right: 25%;
 }
-
 #continue_btn
 {
     border: none;
@@ -57,19 +52,16 @@ body
     margin: 0 auto;
     transition: background-color .3s ease;
 }
-
 #continue_btn:hover
 {
     background-color: #57c6f3;
 }
-
 #note_msg
 {
     color: red;
     font-size: 14px;
     text-align: center;
 }
-
 .slides
 {
     position: fixed;
@@ -80,7 +72,6 @@ body
     height: 100%;
     opacity: 0.5;
 }
-
 .fade
 {
   -webkit-animation-name: fade;
@@ -88,13 +79,11 @@ body
   animation-name: fade;
   animation-duration: 1.5s;
 }
-
 @-webkit-keyframes fade
 {
   from {opacity: .4} 
   to {opacity: 0.5}
 }
-
 @keyframes fade
 {
   from {opacity: .4} 
