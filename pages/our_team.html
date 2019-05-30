@@ -27,9 +27,7 @@
 </html>
 <script>
 $(document).ready(function(){
-
     var username = "";
-
     if(localStorage.getItem("first_name") !== null || localStorage.getItem("last_name") !== null)
     {
         username = localStorage.getItem("first_name") + " " +localStorage.getItem("last_name");
@@ -38,26 +36,20 @@ $(document).ready(function(){
     {
         window.location.href="../index.html";
     }
-
     $("#username_value").text(username);
-    
     $("#remove_name_btn").click(function(){
         localStorage.removeItem("first_name");
         localStorage.removeItem("last_name");
         window.location.href="../index.html";
     });
-    
     $("#change_name_btn").click(function(){
         window.location.href="./change_name.html";
     });
-
     $("#our_team_btn").click(function(){
         window.location.href="./our_team.html";
     });
-
     $("#go_to_questions_btn").click(function(){
         window.location.href="./questions.html";
     });
-
 });
 </script>
